@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MVC_Session1_DAL_.Models
 {
     // Model
-    internal class Department
+    public class Department
     {
         public int Id { get; set; }
         public string Name { get; set; }

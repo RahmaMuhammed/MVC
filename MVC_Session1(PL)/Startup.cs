@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using MVC_Session1_DAL_.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +26,18 @@ namespace MVC_Session1_PL_
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(); // Register Biilt-In Services Requests by MVC
+
+            // services.AddTransient<ApplicationDbContext>();
+            // services.AddScoped<ApplicationDbContext>();
+            // services.AddSingleton<ApplicationDbContext>();
+
+            // services.AddScoped<DbContextOptions<ApplicationDbContext>>();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer("Server = .; DataBase = MvcApplicationSession1; Trusted_Connection = True;");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

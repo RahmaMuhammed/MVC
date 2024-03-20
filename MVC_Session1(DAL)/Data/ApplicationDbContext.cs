@@ -10,17 +10,21 @@ using System.Threading.Tasks;
 
 namespace MVC_Session1_DAL_.Data
 {
-    internal class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server = .; DataBase = MvcApplicationSession1; Trusted_Connection = True;");
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :base(options)
+        {
+
+        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //=> optionsBuilder.UseSqlServer("Server = .; DataBase = MvcApplicationSession1; Trusted_Connection = True;");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-          //  modelBuilder.ApplyConfiguration<Department>(new DepartmentConfigurations());
+            //  modelBuilder.ApplyConfiguration<Department>(new DepartmentConfigurations());
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
-        public DbSet<Department>Departments { get; set; }
+        public DbSet<Department> Departments { get; set; }
     }
 }
