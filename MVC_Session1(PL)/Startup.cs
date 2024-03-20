@@ -36,7 +36,7 @@ namespace MVC_Session1_PL_
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer("Server = .; DataBase = MvcApplicationSession1; Trusted_Connection = True;");
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
         }
 
