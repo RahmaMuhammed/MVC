@@ -14,10 +14,10 @@ namespace MVC_Session1_PL_
     {
         public static void Main(string[] args)
         {
-            var hostbuilder = CreateHostBuilder(args).Build();
+             CreateHostBuilder(args).Build().Run();
             // Data Seeding
             // Apply Migrations
-            hostbuilder.Run();
+          //  hostbuilder.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
