@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using MVC_Session1_BLL_.Interfaces;
+using MVC_Session1_BLL_.Repositories;
 using MVC_Session1_DAL_.Data;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace MVC_Session1_PL_
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddScoped<IDepartmentRepository, IDepartmentRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
