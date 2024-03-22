@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 
 namespace MVC_Session1_PL_
 {
+    // Entry Point
     public class Program
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var hostbuilder = CreateHostBuilder(args).Build();
+            // Data Seeding
+            // Apply Migrations
+            hostbuilder.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
