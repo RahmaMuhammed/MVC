@@ -10,43 +10,13 @@ using System.Threading.Tasks;
 
 namespace MVC_Session1_BLL_.Repositories
 {
-    public class DepartmentRepository : IDepartmentRepository
+    public class DepartmentRepository : GenericRepository<Department>, IDepartmentRepository
     {
-        private readonly ApplicationDbContext _dbContext;
-        public DepartmentRepository(ApplicationDbContext dbContext) // ask CLR for Creating Object from "AppDbContext" 
+        public DepartmentRepository(ApplicationDbContext dbContext) //Ask CLR To Create object from ApplicationDbContext
+            : base(dbContext) 
         {
-            // dbContext = new ApplicationDbContext(new Microsoft.EntityFrameworkCore.DbContextOptions<ApplicationDbContext>);
-            _dbContext = dbContext;
-        }
-        public int Add(Department entity)
-        {
-            _dbContext.Departments.Add(entity);
-            return _dbContext.SaveChanges();
-        }
 
-        public int Update(Department entity)
-        {
-            _dbContext.Departments.Update(entity);
-            return _dbContext.SaveChanges();
         }
-
-        public int Delete(Department entity)
-        {
-            _dbContext.Departments.Remove(entity);
-            return _dbContext.SaveChanges();
-        }
-
-        public Department Get(int id)
-        {
-             /// var department = _dbContext.Departments.Local.Where(D => D.Id == id).FirstOrDefault();
-            /// if(department == null)
-            ///      department = _dbContext.Departments.Where(D => D.Id == id).FirstOrDefault();
-
-            return _dbContext.Departments.Find(id);
-        }
-
-        public IEnumerable<Department> GetAll()
-            => _dbContext.Departments.AsNoTracking().ToList();
 
     }
 }

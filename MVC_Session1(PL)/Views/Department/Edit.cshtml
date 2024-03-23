@@ -1,26 +1,26 @@
 ﻿@model Department
-
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit Department";
 }
 
-<h1>Create New Department</h1>
+<h1>Edit Department</h1>
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="ModelOnly" class="badge-danger"></div>
 
-<form asp-action="Create">
     <div class="col-form-label">Code</div>
-    <input asp-for = "Code" class="form-control"/>
+    <input asp-for="Code" class="form-control" />
     <span asp-validation-for="Code" class="text-warning"></span>
-    
+
     <div class="col-form-label">Name</div>
-    <input asp-for = "Name" class="form-control"/>
+    <input asp-for="Name" class="form-control" />
     <span asp-validation-for="Name" class="text-success"></span>
-    
+
     <div class="col-form-label">DateOfCreation</div>
     <input asp-for="DateOfCreation" class="form-control" />
     <span asp-validation-for="DateOfCreation" class="text-danger"></span>
 
-    <input type="submit" value="Creat" class="btn btn-primary"/>
-    <a  action="Index" class="btn btn-light">Back To List</a>
+    <input type="submit" value="Save" class="btn btn-primary" />
+    <a action="Index" class="btn btn-light">Cancel</a>
 </form>
 
 @section ValidationScriptSection {

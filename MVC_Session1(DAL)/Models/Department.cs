@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MVC_Session1_DAL_.Models
 {
     // Model
-    public class Department
+    public class Department : ModelBase
     {
         public int Id { get; set; }
         [Required (ErrorMessage = "Name is Required")]
