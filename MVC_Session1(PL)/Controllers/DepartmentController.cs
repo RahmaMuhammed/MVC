@@ -50,12 +50,12 @@ namespace MVC_Session1_PL_.Controllers
         // Department/Details/10
         // Department/Details
         [HttpGet]
-        public IActionResult Details(int? Id, string ViewName = "Details")
+        public IActionResult Details(int? id, string ViewName = "Details")
         {
-            if (Id is null)
+            if (id is null)
                 return BadRequest(); // 400
 
-            var department = _departmentRepositery.Get(Id.Value);
+            var department = _departmentRepositery.Get(id.Value);
             if (department == null)
                 return NotFound(); // 404
 
@@ -67,40 +67,82 @@ namespace MVC_Session1_PL_.Controllers
         // Department/Edit/10
         // Department/Edit
         // [HttpGet]
-        public IActionResult Edit(int? Id)
+        [HttpGet]
+        public IActionResult Edit(int? id)
         {
-            return Details(Id, "Edit");
-            /// if (Id is null)
-            ///     return BadRequest(); // 400
-            ///
-            /// var department = _departmentRepositery.Get(Id.Value);
-            /// if (department == null)
-            ///     return NotFound(); // 404
-            ///
-            /// return View(department);
+            if (id == null)
+            {
+                return BadRequest(); // 400
+            }
 
+            var department = _departmentRepositery.Get(id.Value);
+            if (department == null)
+            {
+                return NotFound(); // 404
+            }
+
+            return View(department);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([FromRoute]int Id,Department department)
+        public IActionResult Edit(int id, Department department)
         {
+            if (id != department.Id)
+            {
+                return BadRequest();
+            }
+
             if (ModelState.IsValid)
-                return View(department);
+            {
+                try
+                {
+                    _departmentRepositery.Update(department);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    // Handle the exception
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+            }
+            return View(department);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+                return BadRequest(); // 400
+
+            var department = _departmentRepositery.Get(id.Value);
+            if (department == null)
+                return NotFound(); // 404
+
+            return View(department);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var department = _departmentRepositery.Get(id);
+            if (department == null)
+                return NotFound();
 
             try
             {
-                _departmentRepositery.Update(department);
+                _departmentRepositery.Delete(department);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                // 1. log Exeption
-                // 2. Friendly Message
+                // Handle the exception
                 if (_env.IsDevelopment())
                     ModelState.AddModelError(string.Empty, ex.Message);
                 else
-                    ModelState.AddModelError(string.Empty, "An Error Occured During Update Department");
-                return View(department); 
+                    ModelState.AddModelError(string.Empty, "An error occurred while deleting the department.");
+                return View(department);
             }
         }
     }
