@@ -19,7 +19,7 @@ namespace MVC_Session1_DAL_.Models
         [EnumMember(Value = "PartTime")]
         PartTime = 2
     }
-    public class Employee
+    public class Employee : ModelBase
     {
 
         public int Id { get; set; }

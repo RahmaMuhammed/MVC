@@ -10,47 +10,18 @@ using System.Threading.Tasks;
 
 namespace MVC_Session1_BLL_.Repositories
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
     {
-        private readonly ApplicationDbContext _dbContext;
+       // private  readonly ApplicationDbContext _dbContext;
 
-        public EmployeeRepository(ApplicationDbContext dbContext) // ask CLR for Creating Object from "AppDbContext" 
+        public EmployeeRepository(ApplicationDbContext dbContext) //Ask CLR To Create object from ApplicationDbContext
+            : base(dbContext)
         {
-            // dbContext = new ApplicationDbContext(new Microsoft.EntityFrameworkCore.DbContextOptions<ApplicationDbContext>);
-            _dbContext = dbContext;
+          // _dbContext = dbContext;
         }
-
-        public int Add(Employee entity)
+        public IQueryable<Employee> GetEmployeesByAddress(string address)
         {
-            _dbContext.Employees.Add(entity);
-            return _dbContext.SaveChanges();
+            return _dbContext.Employees.Where(E => E.Address.ToLower() == address.ToLower());
         }
-
-        public int Delete(Employee entity)
-        {
-            _dbContext.Employees.Remove(entity);
-            return _dbContext.SaveChanges();
-        }
-
-        public Employee Get(int id)
-        {
-            /// var department = _dbContext.Departments.Local.Where(D => D.Id == id).FirstOrDefault();
-            /// if(department == null)
-            ///      department = _dbContext.Departments.Where(D => D.Id == id).FirstOrDefault();
-
-            return _dbContext.Employees.Find(id);
-        }
-
-        public IEnumerable<Employee> GetAll()
-            => _dbContext.Employees.AsNoTracking().ToList();
-
-
-        public int Update(Employee entity)
-        {
-            _dbContext.Employees.Update(entity);
-            return _dbContext.SaveChanges();
-        }
-
-
     }
 }
