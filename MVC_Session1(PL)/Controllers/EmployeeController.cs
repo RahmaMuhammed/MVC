@@ -15,9 +15,9 @@ namespace MVC_Session1_PL_.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IWebHostEnvironment _env;
 
-        public EmployeeController(IEmployeeRepository departmentRepository, IWebHostEnvironment env)
+        public EmployeeController(IEmployeeRepository employeeRepository, IWebHostEnvironment env)
         {
-            _employeeRepository = departmentRepository;
+            _employeeRepository = employeeRepository;
             _env = env;
         }
         public IActionResult Index()
