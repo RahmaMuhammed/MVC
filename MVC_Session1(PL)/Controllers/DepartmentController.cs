@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using MVC_Session1_BLL_.Interfaces;
 using MVC_Session1_BLL_.Repositories;
 using MVC_Session1_DAL_.Models;
+using System;
 
 namespace MVC_Session1_PL_.Controllers
 {
@@ -10,9 +13,13 @@ namespace MVC_Session1_PL_.Controllers
     public class DepartmentController : Controller
     {
         private readonly IDepartmentRepository _departmentRepositery;
-        public DepartmentController(IDepartmentRepository departmentRepository)
+
+        private readonly IWebHostEnvironment _env;
+
+        public DepartmentController(IDepartmentRepository departmentRepository, IWebHostEnvironment env)
         {
             _departmentRepositery = departmentRepository;
+            _env = env;
         }
         public IActionResult Index()
         {
@@ -43,17 +50,57 @@ namespace MVC_Session1_PL_.Controllers
         // Department/Details/10
         // Department/Details
         [HttpGet]
-        public IActionResult Details(int? Id)
+        public IActionResult Details(int? Id, string ViewName = "Details")
         {
             if (Id is null)
-              return BadRequest(); // 400
+                return BadRequest(); // 400
 
             var department = _departmentRepositery.Get(Id.Value);
-            if(department == null)
+            if (department == null)
                 return NotFound(); // 404
 
             return View(department);
 
+        }
+
+
+        // Department/Edit/10
+        // Department/Edit
+        // [HttpGet]
+        public IActionResult Edit(int? Id)
+        {
+            return Details(Id, "Edit");
+            /// if (Id is null)
+            ///     return BadRequest(); // 400
+            ///
+            /// var department = _departmentRepositery.Get(Id.Value);
+            /// if (department == null)
+            ///     return NotFound(); // 404
+            ///
+            /// return View(department);
+
+        }
+        [HttpPost]
+        public IActionResult Edit([FromRoute]int Id,Department department)
+        {
+            if (ModelState.IsValid)
+                return View(department);
+
+            try
+            {
+                _departmentRepositery.Update(department);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                // 1. log Exeption
+                // 2. Friendly Message
+                if (_env.IsDevelopment())
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                else
+                    ModelState.AddModelError(string.Empty, "An Error Occured During Update Department");
+                return View(department); 
+            }
         }
     }
 }
