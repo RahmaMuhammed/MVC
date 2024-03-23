@@ -8,95 +8,86 @@ using System;
 
 namespace MVC_Session1_PL_.Controllers
 {
-    // Inhertince : DepartmentController is a Controller
-    // Association : DepartmentController has a DepartmentRepository
-    public class DepartmentController : Controller
+    // Inhertince : EmployeeController is a Controller
+    // Association :EmployeeController has a EmployeeRepository
+    public class EmployeeController : Controller
     {
-        private readonly IDepartmentRepository _departmentRepositery;
-
+        private readonly IEmployeeRepository _employeeRepository;
         private readonly IWebHostEnvironment _env;
 
-        public DepartmentController(IDepartmentRepository departmentRepository, IWebHostEnvironment env)
+        public EmployeeController(IEmployeeRepository departmentRepository, IWebHostEnvironment env)
         {
-            _departmentRepositery = departmentRepository;
+            _employeeRepository = departmentRepository;
             _env = env;
         }
         public IActionResult Index()
         {
-            var department = _departmentRepositery.GetAll();
-            return View(department);
+            var employee = _employeeRepository.GetAll();
+            return View(employee);
         }
         public IActionResult Create()
         {
             return View();
         }
-
         [HttpPost]
-        public IActionResult Create(Department department)
+        public IActionResult Create(Employee employee)
         {
             if (ModelState.IsValid) // server side validation
             {
-                var count = _departmentRepositery.Add(department);
-
+                var count = _employeeRepository.Add(employee);
                 if (count > 0)
                 {
                     return RedirectToAction(nameof(Index));
                 }
             }
-            return View(department);
+            return View(employee);
         }
-
-
-        // Department/Details/10
-        // Department/Details
+        // Employee/Details/10
+        // Employee/Details
         [HttpGet]
         public IActionResult Details(int? id, string ViewName = "Details")
         {
             if (id is null)
                 return BadRequest(); // 400
 
-            var department = _departmentRepositery.Get(id.Value);
-            if (department == null)
+            var employee = _employeeRepository.Get(id.Value);
+            if (employee == null)
                 return NotFound(); // 404
 
-            return View(department);
+            return View(employee);
 
         }
 
-
-        // Department/Edit/10
-        // Department/Edit
+        // Employee/Edit/10
+        // Employee/Edit
         // [HttpGet]
         public IActionResult Edit(int? id)
         {
             if (id == null)
             {
-                return BadRequest(); // 400
+                return BadRequest(); //400
             }
-
-            var department = _departmentRepositery.Get(id.Value);
-            if (department == null)
+            var employee = _employeeRepository.Get(id.Value);
+            if (employee == null)
             {
                 return NotFound(); // 404
             }
-
-            return View(department);
+            return View(employee);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Department department)
+        public IActionResult Edit(int id, Employee employee)
         {
-            if (id != department.Id)
+            if (id != employee.Id)
             {
-                return BadRequest();
+                return BadRequest(); //400
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _departmentRepositery.Update(department);
+                    _employeeRepository.Update(employee);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
@@ -105,43 +96,48 @@ namespace MVC_Session1_PL_.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                 }
             }
-            return View(department);
+            return View(employee);
         }
 
-        [HttpGet]
+        // Employee/Delete/10
+        // Employee/Delete
+        // [HttpGet]
         public IActionResult Delete(int? id)
         {
             if (id == null)
-                return BadRequest(); // 400
-
-            var department = _departmentRepositery.Get(id.Value);
-            if (department == null)
+            {
+                return BadRequest(); //400
+            }
+            var employee = _employeeRepository.Get(id.Value);
+            if (employee == null)
+            {
                 return NotFound(); // 404
-
-            return View(department);
+            }
+            return View(employee);
         }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public IActionResult Delete(int id )
         {
-            var department = _departmentRepositery.Get(id);
-            if (department == null)
+            var employee = _employeeRepository.Get(id);
+            if (employee == null)
+            {
                 return NotFound();
-
+            }
             try
             {
-                _departmentRepositery.Delete(department);
+                _employeeRepository.Delete(employee);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
+                // log Exceptions
                 // Handle the exception
                 if (_env.IsDevelopment())
                     ModelState.AddModelError(string.Empty, ex.Message);
                 else
                     ModelState.AddModelError(string.Empty, "An error occurred while deleting the department.");
-                return View(department);
+                return View(employee);
             }
         }
     }
