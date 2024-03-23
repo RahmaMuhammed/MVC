@@ -81,6 +81,7 @@ namespace MVC_Session1_PL_.Controllers
 
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit([FromRoute]int Id,Department department)
         {
             if (ModelState.IsValid)
