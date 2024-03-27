@@ -24,7 +24,7 @@ namespace MVC_Session1_DAL_.Models
     public class Employee : ModelBase
     {
 
-        public int Id { get; set; }
+       
         [Required]
         [MaxLength(50, ErrorMessage = "Max Length of name is 50 chare")]
         [MinLength(5, ErrorMessage = "Min Length of name is 5 chare")]

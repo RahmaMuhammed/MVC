@@ -14,11 +14,13 @@ namespace MVC_Session1_PL_.Controllers
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IWebHostEnvironment _env;
+        //  private readonly IDepartmentRepository _departmentRepo;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, IWebHostEnvironment env)
+        public EmployeeController(IEmployeeRepository employeeRepository, IWebHostEnvironment env /* , IDepartmentRepository departmentRepo*/)
         {
             _employeeRepository = employeeRepository;
             _env = env;
+          //  _departmentRepo = departmentRepo;
         }
         public IActionResult Index()
         {
@@ -37,6 +39,7 @@ namespace MVC_Session1_PL_.Controllers
         }
         public IActionResult Create()
         {
+            // ViewData["Departments"] = _departmentRepo.GetAll();
             return View();
         }
         [HttpPost]
@@ -79,6 +82,8 @@ namespace MVC_Session1_PL_.Controllers
         // [HttpGet]
         public IActionResult Edit(int? id)
         {
+
+            // ViewData["Departments"] = _departmentRepo.GetAll();
             if (id == null)
             {
                 return BadRequest(); //400
