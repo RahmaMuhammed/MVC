@@ -5,25 +5,14 @@
 
 <h1>Edit Department</h1>
 <form asp-action="Edit" method="post">
-    <div asp-validation-summary="ModelOnly" class="badge-danger"></div>
-
-    <div class="col-form-label">Code</div>
-    <input asp-for="Code" class="form-control" />
-    <span asp-validation-for="Code" class="text-warning"></span>
-
-    <div class="col-form-label">Name</div>
-    <input asp-for="Name" class="form-control" />
-    <span asp-validation-for="Name" class="text-success"></span>
-
-    <div class="col-form-label">DateOfCreation</div>
-    <input asp-for="DateOfCreation" class="form-control" />
-    <span asp-validation-for="DateOfCreation" class="text-danger"></span>
+    <partial name="PartialViews/CreateEditDepartmentPartial" />
 
     <input type="submit" value="Save" class="btn btn-primary" />
     <a action="Index" class="btn btn-light">Cancel</a>
 </form>
 
 @section ValidationScriptSection {
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+           /// <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+           /// <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 }
