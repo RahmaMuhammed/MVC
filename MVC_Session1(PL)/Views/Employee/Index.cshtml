@@ -1,7 +1,19 @@
 ﻿@model IEnumerable<Employee>
 @{
     ViewData["Title"] = "Index";
+
+    string ViewDataMessage = ViewData["Message"] as string; // C# Strongly Type Language
+
+    string ViewBagMessage = ViewBag.Message;
 }
+
+@*<div class="aletr aletr-Warning">
+    @ViewData["Message"]
+</div>*@
+
+@*<div class="aletr aletr-Warning">
+    @ViewBag.Message
+</div>*@
 
 <h1>All Employees</h1>
 <br />

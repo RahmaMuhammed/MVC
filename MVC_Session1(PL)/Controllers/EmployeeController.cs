@@ -22,6 +22,14 @@ namespace MVC_Session1_PL_.Controllers
         }
         public IActionResult Index()
         {
+            // Binding Through Views Dictionary : Transfare Data From Action to View [On Way]
+
+            // 1.ViewData
+            ViewData["Message"] = "Hello View Data";
+
+            // 2.ViewBag
+            ViewBag.Message = "Hello View Bag";
+
             var employee = _employeeRepository.GetAll();
             return View(employee);
         }
