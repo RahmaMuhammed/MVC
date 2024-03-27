@@ -5,6 +5,7 @@ using MVC_Session1_BLL_.Interfaces;
 using MVC_Session1_BLL_.Repositories;
 using MVC_Session1_DAL_.Models;
 using System;
+using System.Linq;
 
 namespace MVC_Session1_PL_.Controllers
 {
@@ -22,7 +23,7 @@ namespace MVC_Session1_PL_.Controllers
             _env = env;
           //  _departmentRepo = departmentRepo;
         }
-        public IActionResult Index()
+        public IActionResult Index(string searchInp)
         {
             // Binding Through Views Dictionary : Transfare Data From Action to View [On Way]
 
@@ -34,7 +35,16 @@ namespace MVC_Session1_PL_.Controllers
             // 2.ViewBag
             ViewBag.Message = "Hello View Bag";
 
-            var employee = _employeeRepository.GetAll();
+            var employee = Enumerable.Empty<Employee>();
+
+            if (searchInp is null)
+            {
+                employee = _employeeRepository.GetAll();
+            }
+            else
+            {
+                 employee = _employeeRepository.SearchByName(searchInp.ToLower());
+            }
             return View(employee);
         }
         public IActionResult Create()
