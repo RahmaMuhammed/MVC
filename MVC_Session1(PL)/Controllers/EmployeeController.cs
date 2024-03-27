@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using MVC_Session1_BLL_.Interfaces;
 using MVC_Session1_BLL_.Repositories;
 using MVC_Session1_DAL_.Models;
+using MVC_Session1_PL_.ViewModels;
 using System;
+using System.Drawing;
 using System.Linq;
 
 namespace MVC_Session1_PL_.Controllers
@@ -13,15 +16,17 @@ namespace MVC_Session1_PL_.Controllers
     // Association :EmployeeController has a EmployeeRepository
     public class EmployeeController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IWebHostEnvironment _env;
         //  private readonly IDepartmentRepository _departmentRepo;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, IWebHostEnvironment env /* , IDepartmentRepository departmentRepo*/)
+        public EmployeeController(IMapper mapper,IEmployeeRepository employeeRepository, IWebHostEnvironment env /* , IDepartmentRepository departmentRepo*/)
         {
+            _mapper = mapper;
             _employeeRepository = employeeRepository;
             _env = env;
-          //  _departmentRepo = departmentRepo;
+            //  _departmentRepo = departmentRepo;
         }
         public IActionResult Index(string searchInp)
         {
@@ -43,7 +48,7 @@ namespace MVC_Session1_PL_.Controllers
             }
             else
             {
-                 employee = _employeeRepository.SearchByName(searchInp.ToLower());
+                employee = _employeeRepository.SearchByName(searchInp.ToLower());
             }
             return View(employee);
         }
@@ -53,12 +58,29 @@ namespace MVC_Session1_PL_.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Employee employee)
+        public IActionResult Create(EmployeeViewModel employee)
         {
             if (ModelState.IsValid) // server side validation
             {
-                var count = _employeeRepository.Add(employee);
+                /// Manual Mapping
+                ///var mappedEmp = new Employee()
+                ///{
+                ///    Name = employee.Name,
+                ///    Age = employee.Age,
+                ///    Address = employee.Address,
+                ///    Salary = employee.Salary,
+                ///    Email = employee.Email,
+                ///    PhoneNumber = employee.PhoneNumber,
+                ///    IsActive = employee.IsActive,
+                ///    HiringDate = employee.HiringDate
+                ///};
+                
+              
 
+                var mappEmp = _mapper.Map<EmployeeViewModel , Employee>(employee);
+
+                //    var mappedEmp = (Employee)employee;
+                var count = _employeeRepository.Add(mappEmp);
                 // 3.TempData
                 if (count > 0)
                     TempData["Message"] = "Department is Created Successful";
