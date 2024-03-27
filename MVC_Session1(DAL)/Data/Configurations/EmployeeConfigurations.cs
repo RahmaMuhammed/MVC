@@ -21,6 +21,7 @@ namespace MVC_Session1_DAL_.Data.Configurations
                 (Gender) => Gender.ToString(),
                 (GenderAsString) => (Gender)Enum.Parse(typeof(Gender), GenderAsString, true)
                 );
+
         }
     }
 }

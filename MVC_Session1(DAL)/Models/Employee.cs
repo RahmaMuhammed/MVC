@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace MVC_Session1_DAL_.Models
@@ -54,6 +56,12 @@ namespace MVC_Session1_DAL_.Models
         public EmpType EmployeeType { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; } = false;
+
+        public int? DepartmentId { get; set; } // FK
+
+        // Navigational Proberty => [One]
+        // [InverseProperty(nameof(Models.Department.Employees))]
+        public Department Department { get; set; }
 
     }
 }
