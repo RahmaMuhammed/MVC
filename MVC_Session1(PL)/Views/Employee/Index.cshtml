@@ -6,7 +6,9 @@
 
     string ViewBagMessage = ViewBag.Message;
 }
-
+<div class="aletr aletr-Warning">
+    @TempData["Message"]
+</div>
 @*<div class="aletr aletr-Warning">
     @ViewData["Message"]
 </div>*@
@@ -51,7 +53,7 @@
                     <td>@employee.Gender</td>
                     <td>@employee.Email</td>
                     <td>@employee.Address</td>
-                   <partial name="ButtonsPartial" model ="@employee.Id"/>
+                    <partial name="ButtonsPartial" model="@employee.Id" />
                 </tr>
 
             }
