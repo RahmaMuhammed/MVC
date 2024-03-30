@@ -12,7 +12,7 @@ namespace MVC_Session1_PL_
     // Entry Point
     public class Program
     {
-        public static void Main(string[] args)
+        public static void  Main(string[] args)
         {
             var hostbuilder = CreateHostBuilder(args).Build();
             // Data Seeding
