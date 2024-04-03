@@ -42,5 +42,7 @@ namespace MVC_Session1_DAL_.Models
         public bool IsDeleted { get; set; } = false;
         public int? DepartmentId { get; set; } // FK
         public Department Department { get; set; }
+
+        public string ImageName { get; set; }
     }
 }

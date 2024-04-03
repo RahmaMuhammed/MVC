@@ -5,10 +5,12 @@ using Microsoft.Extensions.Hosting;
 using MVC_Session1_BLL_.Interfaces;
 using MVC_Session1_BLL_.Repositories;
 using MVC_Session1_DAL_.Models;
+using MVC_Session1_PL_.Helpers;
 using MVC_Session1_PL_.ViewModels;
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Metadata;
 
 namespace MVC_Session1_PL_.Controllers
 {
@@ -62,6 +64,7 @@ namespace MVC_Session1_PL_.Controllers
         {
             if (ModelState.IsValid) // server side validation
             {
+                var FileName = DocumentSettings.UploadFile(employee.Image, "images");
                 /// Manual Mapping
                 ///var mappedEmp = new Employee()
                 ///{
@@ -78,6 +81,7 @@ namespace MVC_Session1_PL_.Controllers
               
 
                 var mappEmp = _mapper.Map<EmployeeViewModel , Employee>(employee);
+                mappEmp.ImageName = FileName;
 
                 //    var mappedEmp = (Employee)employee;
                 var count = _employeeRepository.Add(mappEmp);

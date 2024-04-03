@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Runtime.Serialization;
+using Microsoft.AspNetCore.Http;
 
 namespace MVC_Session1_PL_.ViewModels
 {
@@ -58,5 +59,7 @@ namespace MVC_Session1_PL_.ViewModels
         //Navigation
         public Department Department { get; set; }
         public DateTime CreationDate { get; set; }
+
+        public IFormFile Image { get; set; }
     }
 }
