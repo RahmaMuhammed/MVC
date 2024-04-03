@@ -57,5 +57,6 @@ namespace MVC_Session1_PL_.ViewModels
         public int? DepartmentId { get; set; }
         //Navigation
         public Department Department { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }
