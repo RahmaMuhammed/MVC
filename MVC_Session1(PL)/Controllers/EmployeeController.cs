@@ -11,6 +11,7 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Threading.Tasks;
 
 namespace MVC_Session1_PL_.Controllers
 {
@@ -30,7 +31,7 @@ namespace MVC_Session1_PL_.Controllers
             _env = env;
             //  _departmentRepo = departmentRepo;
         }
-        public IActionResult Index(string searchInp)
+        public async Task<IActionResult> Index(string searchInp)
         {
             // Binding Through Views Dictionary : Transfare Data From Action to View [On Way]
 
@@ -46,7 +47,7 @@ namespace MVC_Session1_PL_.Controllers
 
             if (searchInp is null)
             {
-                employee = _employeeRepository.GetAll();
+                employee = await _employeeRepository.GetAll();
             }
             else
             {
@@ -60,11 +61,11 @@ namespace MVC_Session1_PL_.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(EmployeeViewModel employee)
+        public async Task< IActionResult> Create(EmployeeViewModel employee)
         {
             if (ModelState.IsValid) // server side validation
             {
-                var FileName = DocumentSettings.UploadFile(employee.Image, "images");
+                var FileName = await DocumentSettings.UploadFile(employee.Image, "images");
                 /// Manual Mapping
                 ///var mappedEmp = new Employee()
                 ///{

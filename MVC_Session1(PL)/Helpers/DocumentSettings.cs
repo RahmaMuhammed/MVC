@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Razor.Language;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace MVC_Session1_PL_.Helpers
 {
     public static class DocumentSettings
     {
-        public static string UploadFile(IFormFile file, string FolderName)
+        public static async Task<string> UploadFile(IFormFile file, string FolderName)
         {
             // 1.get located folder path
             // string Folderpath = $"E:\\.thumbnails{FolderName}";

@@ -41,12 +41,12 @@ namespace MVC_Session1_BLL_.Repositories
             return _dbContext.Set<T>().Find(id);
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual async Task <IEnumerable<T>> GetAll()
         {
             if (typeof(T) == typeof(Employee))
-                return (IEnumerable<T>) _dbContext.Employees.Include(E => E.Department).AsNoTracking().ToList();
+                return  (IEnumerable<T>)await _dbContext.Employees.Include(E => E.Department).AsNoTracking().ToListAsync();
             else
-                return _dbContext.Set<T>().AsNoTracking().ToList();
+                return await _dbContext.Set<T>().AsNoTracking().ToListAsync();
         }
 
         public int Update(T entity)

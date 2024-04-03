@@ -9,7 +9,7 @@ namespace MVC_Session1_BLL_.Interfaces
 {
     public interface IGenericRepository<T> where T : ModelBase
     {
-        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAll();
         T Get(int id);
         int Add(T entity);
         int Update(T entity);
