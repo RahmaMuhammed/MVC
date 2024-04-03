@@ -8,6 +8,6 @@ namespace MVC_Session1_DAL_.Models
 {
     public class ModelBase
     {
-
+        public int Id { get; set; }
     }
 }
