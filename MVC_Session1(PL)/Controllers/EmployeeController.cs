@@ -185,6 +185,9 @@ namespace MVC_Session1_PL_.Controllers
             {
                 _employeeRepository.Delete(employee);
                 return RedirectToAction(nameof(Index));
+              //  var count = _unitOfWorkComplete;
+              // if(count > 0)
+              // DocumentSettings.DeleteFile(employee,ImageName,"Image");
             }
             catch (Exception ex)
             {
